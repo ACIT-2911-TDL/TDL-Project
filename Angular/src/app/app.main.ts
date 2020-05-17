@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { formatDate } from '@angular/common';
 
 
 @Component({
     templateUrl: './app.main.html'
 })
 export class MainComponent {
+    username: String;
     _allTasksArray: Array<any>;
     _sortedTasksArray: Array<any>;
     _overdueTasksArray: Array<any> = [];
@@ -23,11 +23,18 @@ export class MainComponent {
 
     constructor(private http: HttpClient) {
         this._http = http;
-        this.getAllTasks();
+        this.updateLinks()
+        this.getTasks();
         this._today = new Date();
         this._todayTime = this.getTime(this._today)
         this._today = this.formatTaskDeadline(this._today);
 
+    }
+
+    updateLinks() {         
+        if(sessionStorage.getItem('username')) {
+            this.username = sessionStorage.getItem('username')
+        }
     }
 
     formatTaskDeadline(_date) {
@@ -51,16 +58,18 @@ export class MainComponent {
         return _mins
     }
 
-    getAllTasks() {
-        let url = "http://127.0.0.1:5000/toDoTasks";
-        this._http.get<any>(url)
+    getTasks() {
+        let url = 'http://localhost:1337/toDoTasks';
+
+        this._http.post<any>(url, {username:this.username})
         .subscribe(result => {
-            this._allTasksArray = result;
+            this._allTasksArray = result.toDoTasks;
+            console.log(this._allTasksArray)
 
             
             // order all tasks by time
             for(let i=0; i<this._allTasksArray.length; i++){
-                this._allTasksArray[i].deadline = this._allTasksArray[i].deadline.slice(0,-3)
+                this._allTasksArray[i].deadline = this._allTasksArray[i].deadline
                 this._allTasksArray[i].deadline = new Date(this._allTasksArray[i].deadline)
             }
             this._sortedTasksArray = this._allTasksArray.sort((a, b)=>  a.deadline -  b.deadline)
@@ -78,7 +87,6 @@ export class MainComponent {
                 }
                 else if(this.taskDate - this._today <= 7 && this.taskDate - this._today > 0) {
                     this._weekTasksArray.push(this._sortedTasksArray[i])
-                    console.log(this._sortedTasksArray[i].deadline)
 
                 }
                 else if(this.taskDate - this._today > 7) {
@@ -94,9 +102,10 @@ export class MainComponent {
     }
 
     deleteTask() {
-        let url = "http://127.0.0.1:5000/deleteTask";
+        let url = "http://localhost:1337/deleteTask";
 
-        this.http.post(url,this.selectedTask)
+        this.http.post(url,{task:this.selectedTask,
+                            username:this.username})
             .subscribe(
                 (data) => {
                     // console.log(data)
@@ -109,9 +118,10 @@ export class MainComponent {
     }
 
     completeTask() {
-        let url = "http://127.0.0.1:5000/completeTask";
+        let url = "http://localhost:1337/completeTask";
 
-        this.http.post(url,this.selectedTask)
+        this.http.post(url,{task:this.selectedTask,
+                            username:this.username})
         .subscribe(
             (data) => {
                 // console.log(data)
@@ -123,7 +133,7 @@ export class MainComponent {
     }
 
     markTask() {
-        let url = "http://127.0.0.1:5000/markTask";
+        let url = "http://localhost:1337/markTask";
         if(this.selectedTask.color == "red") {
             this.selectedTask.color = null;
         }
@@ -131,7 +141,8 @@ export class MainComponent {
             this.selectedTask.color = "red"
         }
 
-        this.http.post(url,this.selectedTask)
+        this.http.post(url,{task:this.selectedTask,
+                            username:this.username})
         .subscribe(
             (data) => {
                 // console.log(data)

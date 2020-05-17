@@ -7,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class DoneTasksComponent {
     _doneTasksArray: Array<any>;
+    username: String;
     _http: HttpClient;
     selectedTask;
 
@@ -15,16 +16,21 @@ export class DoneTasksComponent {
 
     constructor(private http: HttpClient) {
         this._http = http;
+        this.updateLinks()
         this.getDoneTasks();
     }
 
+    updateLinks() {         
+        if(sessionStorage.getItem('username')) {
+            this.username = sessionStorage.getItem('username')
+        }
+    }
 
     getDoneTasks() {
-        let url = "http://127.0.0.1:5000/doneTasks";
-        this._http.get<any>(url)
+        let url = "http://localhost:1337/doneTasks";
+        this._http.post<any>(url, {username:this.username})
         .subscribe(result => {
-            this._doneTasksArray = result;
-            console.log(this._doneTasksArray)
+            this._doneTasksArray = result.doneTasks;
         })
     }
 
