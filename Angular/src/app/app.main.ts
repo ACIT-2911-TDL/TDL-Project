@@ -59,18 +59,17 @@ export class MainComponent {
     }
 
     getTasks() {
-        let url = 'http://localhost:1337/toDoTasks';
+        // let url = 'http://localhost:1337/toDoTasks';
+        let url = 'https://tdl-nodjs.herokuapp.com/toDoTasks';
 
         this._http.post<any>(url, {username:this.username})
         .subscribe(result => {
             this._allTasksArray = result.toDoTasks;
-            console.log(this._allTasksArray)
 
             
             // order all tasks by time
             for(let i=0; i<this._allTasksArray.length; i++){
-                this._allTasksArray[i].deadline = this._allTasksArray[i].deadline
-                this._allTasksArray[i].deadline = new Date(this._allTasksArray[i].deadline)
+                this._allTasksArray[i].deadline = new Date(this._allTasksArray[i].deadline.slice(0,-1))
             }
             this._sortedTasksArray = this._allTasksArray.sort((a, b)=>  a.deadline -  b.deadline)
 
@@ -102,7 +101,8 @@ export class MainComponent {
     }
 
     deleteTask() {
-        let url = "http://localhost:1337/deleteTask";
+        // let url = "http://localhost:1337/deleteTask";
+        let url = 'https://tdl-nodjs.herokuapp.com/deleteTask';
 
         this.http.post(url,{task:this.selectedTask,
                             username:this.username})
@@ -118,7 +118,8 @@ export class MainComponent {
     }
 
     completeTask() {
-        let url = "http://localhost:1337/completeTask";
+        // let url = "http://localhost:1337/completeTask";
+        let url = 'https://tdl-nodjs.herokuapp.com/completeTask'
 
         this.http.post(url,{task:this.selectedTask,
                             username:this.username})
@@ -133,11 +134,13 @@ export class MainComponent {
     }
 
     markTask() {
-        let url = "http://localhost:1337/markTask";
+        // let url = "http://localhost:1337/markTask";
+        let url = "https://tdl-nodjs.herokuapp.com/markTask";
+
         if(this.selectedTask.color == "red") {
-            this.selectedTask.color = null;
+            this.selectedTask.color = "regular";
         }
-        else if(this.selectedTask.color == null) {
+        else if(this.selectedTask.color == "regular") {
             this.selectedTask.color = "red"
         }
 
@@ -145,11 +148,12 @@ export class MainComponent {
                             username:this.username})
         .subscribe(
             (data) => {
-                // console.log(data)
+                console.log(data)
             },
             error => {
                 alert(JSON.stringify(error));
             });
+
     }
 
 }

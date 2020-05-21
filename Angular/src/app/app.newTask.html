@@ -1,4 +1,5 @@
 <style>
+
     @media only screen and (min-width: 768px) {
         body {
             background-color: floralwhite;
@@ -22,7 +23,7 @@
         p {
             font-size: 50px;
             font-family: cursive;
-            color: beige;
+            color: #ffbf00;
             animation: blink 2s infinite;
         }
 
@@ -44,7 +45,7 @@
             width: 75px;
             position: relative;
             top: 50%;
-            margin: auto;
+            /* margin: auto; */
         }
 
         p:hover {
@@ -85,7 +86,7 @@
         p {
             font-size: 25px;
             font-family: cursive;
-            color: beige;
+            color: #ffbf00;
             animation: blink 2s infinite;
         }
 
@@ -144,28 +145,16 @@
     }
 </style>
 
-<section>
-    <article style="background-image: url('https://cdn.pixabay.com/photo/2018/06/20/08/05/august-3485999_1280.jpg')">
-        <p>Task Name</p>
-        <input type="text" [(ngModel)]="name" required>
-    </article>
+    <p>Task Name</p>
+    <input type="text" [(ngModel)]="name" required>
 
-    <article style="background-image: url('https://cdn.pixabay.com/photo/2018/06/20/07/33/planner-3485976_1280.jpg');">
-        <p>Description</p>
-        <input type="text" [(ngModel)]="description" required>
-    </article>
+    <p>Description</p>
+    <input type="text" [(ngModel)]="description" required>
 
-    <article style="background-image: url('https://cdn.pixabay.com/photo/2015/01/09/11/08/startup-594090_1280.jpg');">
-        <p>Deadline</p>
-        <input type="datetime-local" [(ngModel)]="deadline" required><br />
-    </article>
+    <p>Deadline</p>
+    <input type="datetime-local" [(ngModel)]="deadline" required><br><br>
 
-    <article class='adjust'
-        style="background-image: url('https://cdn.pixabay.com/photo/2015/01/08/18/25/startup-593327_1280.jpg');">
-        <div>
-            <input type="submit" value="Add Item" (click)="createTask()">
-            {{_errorMessage}}
-        </div>
-    </article>
-
-</section>
+    <div>
+        <input type="submit" value="Add Item" (click)="createTask()">
+    </div>
+    <p>{{_errorMessage}}</p>

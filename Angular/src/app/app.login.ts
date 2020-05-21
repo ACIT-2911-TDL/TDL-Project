@@ -35,7 +35,8 @@ export class LoginComponent {
     }
 
     login() {
-        let url = 'http://localhost:1337/auth';
+        let url = 'https://tdl-nodjs.herokuapp.com/auth';
+        // let url = 'http://localhost:1337/auth';
     
         this.http.post(url, {
                 username:  this.username,

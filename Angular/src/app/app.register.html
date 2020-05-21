@@ -1,38 +1,20 @@
-<!-- <table>
-    <tr>
-        <td>User Name: </td>
-        <td><input [(ngModel)]="username" type="text" required></td>
-    </tr>
-    <tr>
-        <td>First Name: </td>
-        <td><input [(ngModel)]="firstName" type="text" required></td>
-    </tr>
-    <tr>
-        <td>Last Name: </td>
-        <td><input [(ngModel)]="lastName" type="text" required></td>
-    </tr>
-    <tr>
-        <td>Email: </td>
-        <td><input [(ngModel)]="email" type="text" required email></td>
-    </tr>
-    <tr>
-        <td>Password:</td>
-        <td><input [(ngModel)]="password" type="password" required></td>
-    </tr>
-    <tr>
-        <td>Password Confirmation:</td>
-        <td><input [(ngModel)]="passwordConfirm" type="password" required></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td> <input type="submit" value="Register" (click)="register()"></td>
-    </tr>
-</table> -->
+<style>
+        @media only screen and (min-width: 768px) {
+            table {
+                width:50%;margin:auto
+            }
+        }
+        @media only screen and (max-width: 768px) {
+            table {
+                margin:auto
+            }
+        }
+</style>
 
 
+<table role="form">
+        <p class="h4 mb-4">User Register</p>
 
-
-<table role="form" style="width:350px">
         <div class="form-group">
                 <input type="username" name="username" class="form-control input-sm" 
                 placeholder="Username" [(ngModel)]="username"> 
@@ -72,7 +54,8 @@
         </div>
     </div>
 
-    <input type="submit" value="Register" class="btn btn-info btn-block" (click)="register()">
+    <input type="submit" value="Register" class="btn btn-info btn-block" (click)="register()" style="margin-bottom:10px">
+
+    <p class="h4 mb-4" style="color:#ff8000	">{{errorMessage}}</p>
 </table>
 
-<h4>{{errorMessage}}</h4>

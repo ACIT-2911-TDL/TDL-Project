@@ -33,7 +33,10 @@ export class RegisterComponent {
 
 
     register() {
-        let url = 'http://localhost:1337/CreateUser';
+        // let url = 'http://localhost:1337/CreateUser';
+        let url = 'https://tdl-nodjs.herokuapp.com/CreateUser'
+
+
         let validEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.email);
         let validPasswd = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,8}$/.test(this.password);
 
@@ -51,7 +54,7 @@ export class RegisterComponent {
             this.errorMessage = "Email format is incorrect."
         }
         else if(!validPasswd) {
-            this.errorMessage = "Password must be 6 to 20 characters" + 
+            this.errorMessage = "Password must be 6 to 20 characters " + 
             "which contain at least one numeric digit, one uppercase and one lowercase letter."
         }
         else {

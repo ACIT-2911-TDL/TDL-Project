@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 export class ApiService {
-    public site='http://localhost:1337/';
+    public site='https://tdl-nodjs.herokuapp.com/';
     // Pointer to component using ApiService.
     _that:any; 
 

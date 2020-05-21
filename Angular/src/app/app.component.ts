@@ -16,7 +16,7 @@ export class AppComponent {
     username: string = "";
     auth_token: string = "";
     _apiService: ApiService;
-    public site = 'http://localhost:1337/';
+    public site = 'https://tdl-nodjs.herokuapp.com/';
 
 
     constructor(private http: HttpClient, private router: Router) {

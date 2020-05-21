@@ -7,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class DoneTasksComponent {
     _doneTasksArray: Array<any>;
+    _sortedTasksArray: Array<any>;
     username: String;
     _http: HttpClient;
     selectedTask;
@@ -27,11 +28,20 @@ export class DoneTasksComponent {
     }
 
     getDoneTasks() {
-        let url = "http://localhost:1337/doneTasks";
+        // let url = "http://localhost:1337/doneTasks";
+        let url = "https://tdl-nodjs.herokuapp.com/doneTasks";
+
         this._http.post<any>(url, {username:this.username})
         .subscribe(result => {
             this._doneTasksArray = result.doneTasks;
+            // order all tasks by time
+            for(let i=0; i<this._doneTasksArray.length; i++){
+                this._doneTasksArray[i].deadline = new Date(this._doneTasksArray[i].deadline.slice(0,-1))
+            }
+            this._sortedTasksArray = this._doneTasksArray.sort((a, b)=>  a.complete -  b.complete)
         })
+
+
     }
 
     onSelect(task) {

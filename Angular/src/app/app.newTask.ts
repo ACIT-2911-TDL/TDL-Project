@@ -46,8 +46,11 @@ export class NewTaskComponent {
             this._errorMessage = 'Task deadline can not be empty.'
         }
         else {
-            let url = "http://localhost:1337/newTask";
-            console.log(this.username)
+            // let url = "http://localhost:1337/newTask";
+            let url = 'https://tdl-nodjs.herokuapp.com/newTask';
+
+
+            // console.log(this.username)
             let newTask = {
                 "name": this.name,
                 "description": this.description,
@@ -57,7 +60,7 @@ export class NewTaskComponent {
             this._http.post<any>(url, newTask)
             .subscribe(
                 (data) => {
-                    console.log(data)
+                    // console.log(data)
                     alert('New task successfully created.')
                     this.router.navigateByUrl('/main');
                 },
